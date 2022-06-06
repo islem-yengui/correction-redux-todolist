@@ -1,4 +1,4 @@
-import { ADDTASK, EDITTASK,DELETE_TASK,COMPLETE_TASK } from "./typeAction"
+import { ADDTASK, EDITTASK,DELETE_TASK,COMPLETE_TASK, FILTER_TASK } from "./typeAction"
 
 
 
@@ -23,8 +23,9 @@ const init ={
         
         }
     ],
+    isFiltered: false,
     
-}
+};
 
 const reducer =(state=init,{type,payload})=>{
     switch (type) {
@@ -34,14 +35,18 @@ const reducer =(state=init,{type,payload})=>{
             }
     case EDITTASK:
         return{
-        
+            ...state,TASK:state.TASK.map(el=>el.id===payload.id?payload:el)
         }
+        case FILTER_TASK:
+            return {
+                ...state,isFiltered:!state.isFiltered
+            }
         case DELETE_TASK:
-      return {...state,Task:state.TASK.filter((el) => el.id !== payload)}
+      return {...state,TASK:state.TASK.filter((el) => el.id !== payload)};
     case COMPLETE_TASK:
       return {...state,TASK:state.TASK.map((el) =>
         el.id === payload ? { ...el, completed: !el.completed } : el
-      );}
+      )}
         default:
            return state
     }

@@ -7,7 +7,7 @@ const ListTask = () => {
     const {TASK}= useSelector (state => state) 
     return (
       <div>
-        <AddTask />
+        {/* <AddTask /> */}
         <Task tasks={TASK} />
       </div>
     );
